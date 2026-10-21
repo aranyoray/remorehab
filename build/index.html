@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ReMoRehab — Print the headset</title>
+<meta name="description" content="Eleven printable parts, about $3 of filament and a $10 pair of lenses. Print settings, assembly order and the parametric source that generates every file.">
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="../">ReMo<span>Rehab</span></a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="../">Home</a>
+      <a href="../build/" aria-current="page">Build one</a>
+      <a href="../data/">Sources</a>
+      <a href="../app/">Open the app</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<section>
+  <div class="wrap">
+    <h1>Print the headset.</h1>
+    <p class="lede">Eleven parts, nineteen pieces, about $3 of filament and a $10 pair of lenses.
+    It holds any phone up to 168&nbsp;×&nbsp;82&nbsp;×&nbsp;11&nbsp;mm — which covers every current
+    Pro Max and Ultra — and the lens spacing adjusts from 56 to 68&nbsp;mm.</p>
+
+    <figure>
+      <img src="../renders/assembly.png" alt="Four views of the assembled headset: angled view of the face opening showing both lens pods, angled view of the perforated phone door, head-on view through both lenses with the central divider, and a side profile.">
+      <figcaption>The design is clean-sheet and carries no branding. Interpupillary distance adjusts
+      by sliding the lens pods; the face rim is cut to a spherical face form so it rests on the brow
+      and cheeks rather than standing the eye off a flat ring.</figcaption>
+    </figure>
+
+    <h2>What you need</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>A printer</h3>
+        <p>Any FDM machine with a 200&nbsp;mm bed. PLA or PETG, 0.2&nbsp;mm layers, three perimeters,
+        20% infill. Only one of the eleven parts needs supports.</p>
+      </div>
+      <div class="card">
+        <h3>Two lenses</h3>
+        <p>Ø47&nbsp;mm biconvex, about 21&nbsp;mm thick, roughly 45&nbsp;mm focal length — the standard
+        pair sold for phone VR headsets, usually under $10 for two.</p>
+      </div>
+      <div class="card">
+        <h3>A metre of webbing</h3>
+        <p>25&nbsp;mm elastic strap. The two buckles are printed. Three attachment points: both sides
+        and over the top.</p>
+      </div>
+    </div>
+
+    <h2>The parts</h2>
+    <div class="tbl-scroll">
+      <table>
+        <caption>All files are in the <a href="https://github.com/aranyoray/remorehab/tree/main/stl">stl folder</a> of the repository.</caption>
+        <thead><tr><th scope="col">Part</th><th scope="col">Qty</th><th scope="col">Orientation</th><th scope="col">Notes</th></tr></thead>
+        <tbody>
+          <tr><td><a href="../stl/01_shell.stl">01 shell</a></td><td>1</td><td>phone mouth down</td><td>the long print, about 110&nbsp;cm³</td></tr>
+          <tr><td><a href="../stl/02_screen_mask.stl">02 screen mask</a></td><td>1</td><td>flat</td><td>twin windows and the light barrier</td></tr>
+          <tr><td><a href="../stl/03_lens_carrier.stl">03 lens carrier</a></td><td>1</td><td>plate down, hooks up</td><td></td></tr>
+          <tr><td><a href="../stl/04_lens_pod.stl">04 lens pod</a></td><td>2</td><td>flange down</td><td>slides sideways to set IPD</td></tr>
+          <tr><td><a href="../stl/05_lens_ring.stl">05 lens ring</a></td><td>2</td><td>flat</td><td>split snap ring</td></tr>
+          <tr><td><a href="../stl/06_septum.stl">06 septum</a></td><td>1</td><td>flat on its side</td><td>stops each eye seeing the other half</td></tr>
+          <tr><td><a href="../stl/07_door.stl">07 door</a></td><td>1</td><td>outside down</td><td>printed leaf springs clamp the phone</td></tr>
+          <tr><td><a href="../stl/08_phone_spacer.stl">08 phone spacer</a></td><td>4</td><td>flat</td><td>use none to two per side</td></tr>
+          <tr><td><a href="../stl/09_face_gasket.stl">09 face gasket</a></td><td>1</td><td>socket down</td><td><strong>TPU, and the one part that needs supports</strong></td></tr>
+          <tr><td><a href="../stl/10_strap_buckle.stl">10 strap buckle</a></td><td>2</td><td>flat</td><td>tri-glide for 25&nbsp;mm webbing</td></tr>
+          <tr><td><a href="../stl/11_focus_shim.stl">11 focus shim</a></td><td>4</td><td>flat</td><td>1&nbsp;mm each, optional</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      <p>If you have no TPU, skip the gasket entirely and stick a strip of 8&nbsp;mm adhesive foam
+      weatherstrip around the face rim instead. The rim is already shaped to the face and is
+      comfortable bare — the gasket is a refinement, not a requirement.</p>
+    </div>
+
+    <h2>Assembly</h2>
+    <ol class="steps">
+      <li>
+        <h3>Lenses into the pods</h3>
+        <p>Drop a lens into each pod from the face side, then press a ring in until the snap bead
+        clicks into its groove. Add shims behind the lens first if you want it further from the screen.</p>
+      </li>
+      <li>
+        <h3>Pods into the carrier</h3>
+        <p>Push each pod through the carrier's slot from the screen side until the two barbs snap past
+        the far face. They now slide left and right to set the lens spacing.</p>
+      </li>
+      <li>
+        <h3>Carrier into the shell</h3>
+        <p>Slide it in through the phone mouth, lens side first, until the side hooks click into their
+        pockets. The shell's taper stops it at the right depth.</p>
+      </li>
+      <li>
+        <h3>Septum, then screen mask</h3>
+        <p>The septum slides in at the centre line, tabs first. The mask then drops into the tray and
+        its centre rib captures the septum's remaining tab.</p>
+      </li>
+      <li>
+        <h3>Gasket and strap</h3>
+        <p>Push the gasket over the face rim until the bead drops into the groove. Thread the webbing
+        through both side slots and the top slot, using the buckles to adjust.</p>
+      </li>
+      <li>
+        <h3>Phone in, door on</h3>
+        <p>Lay the phone in screen-down. Use spacers at the ends if it is much shorter than 168&nbsp;mm.
+        Close the door — the leaf springs press the phone against the mask. Open
+        <a href="../app/">the app</a>, switch to headset view, and you are running.</p>
+      </li>
+    </ol>
+
+    <h2>Changing the design</h2>
+    <p>The headset is not a mesh someone edited by hand — it is generated by a parametric script, so
+    every dimension is a number you can change. Lens size, lens spacing range, phone envelope, wall
+    thickness, the shroud's two end sections and the curvature of the face rim are all constants at
+    the top of one file.</p>
+    <p style="font-family:ui-monospace,monospace;font-size:.9rem;background:var(--panel);border:1px solid var(--line);border-radius:.5rem;padding:1rem;max-width:none;overflow-x:auto">
+      python3 -m venv venv &amp;&amp; ./venv/bin/pip install numpy trimesh manifold3d mapbox-earcut rtree<br>
+      ./venv/bin/python headset-source/build.py&nbsp;&nbsp;&nbsp;# writes stl/<br>
+      ./venv/bin/python headset-source/verify.py&nbsp;&nbsp;# interference, clearance, printability
+    </p>
+    <p>The verify script is worth running if you change anything. It checks that no two assembled
+    parts overlap, that the lens pods still clear the carrier and septum across the full spacing
+    range, that the carrier still fits through the shell's taper, and it measures unsupported
+    overhang per part by ray-casting every downward-facing triangle.</p>
+
+    <figure>
+      <img src="../renders/sections.png" alt="Two cross-section drawings of the assembled headset, one horizontal and one vertical, with each part outlined in a different colour and the screen, lens and face rim planes marked.">
+      <figcaption>Cross-sections through the assembly. The lens sits 42&nbsp;mm from the screen; the
+      face rim is 58&nbsp;mm deep between the eyes and 88&nbsp;mm at the temples.</figcaption>
+    </figure>
+  </div>
+</section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <p>ReMoRehab — Congressional App Challenge, Maryland's 1st congressional district.
+    <a href="https://github.com/aranyoray/remorehab">Repository</a></p>
+  </div>
+</footer>
+</body>
+</html>

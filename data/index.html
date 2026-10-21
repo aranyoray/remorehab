@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ReMoRehab — Where every number comes from</title>
+<meta name="description" content="Every figure quoted on this site, with its source, its data year, and its limitations.">
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="../">ReMo<span>Rehab</span></a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="../">Home</a>
+      <a href="../build/">Build one</a>
+      <a href="../data/" aria-current="page">Sources</a>
+      <a href="../app/">Open the app</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<section>
+  <div class="wrap">
+    <h1>Where every number comes from.</h1>
+    <p class="lede">Nothing on this site is estimated, rounded up for effect, or quoted second-hand.
+    Each figure is below with its source and its data year, including the ones that weaken the case.</p>
+
+    <h2>How to read the county figures</h2>
+    <p>The county health numbers come from CDC PLACES, which produces <em>model-based</em> small-area
+    estimates. They are not counts of real diagnoses in a county register. CDC fits a statistical
+    model to Behavioral Risk Factor Surveillance System survey responses plus census data, then
+    predicts a rate for every county in the country. That is the only way to get comparable
+    county-level chronic-disease rates, and it is what the CDC itself publishes — but it means every
+    county figure carries a confidence interval, and small differences between two counties should
+    not be treated as meaningful.</p>
+    <p>The differences quoted here are not small ones. Somerset County's modelled stroke prevalence
+    is two-thirds higher than Montgomery County's, and the Lower Shore counties sit above the state
+    median on every measure at once, which is harder to explain away as model noise than any single
+    number would be.</p>
+    <p>One comparison on the home page crosses sources: Somerset's 4.0% is a CDC PLACES county
+    estimate, while Arkansas's 4.8% is a state-level figure from the American Heart Association's
+    2025 update. Both ultimately rest on BRFSS data and both are age-adjusted, but they are produced
+    by different methods, so treat that as an illustration of scale rather than a like-for-like
+    ranking.</p>
+
+    <h2>The figures</h2>
+    <ul class="sources">
+      <li>
+        <span class="claim">Wicomico County: 3.4% stroke, 27.6% any disability, 12.9% mobility disability, 9.5% uninsured. Somerset: 4.0% / 32.8% / 15.4% / 11.3%. All nine Eastern Shore counties, the Maryland county median and Montgomery County.</span>
+        <span class="cite">CDC, <em>PLACES: Local Data for Better Health, County Data, 2025 release</em>. Age-adjusted prevalence among adults 18 and over. Queried directly from the CDC open-data API; the Maryland median and the Montgomery comparison were computed across all 24 Maryland jurisdictions in that dataset. <a href="https://data.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-County-Data-20/swc5-untb/about_data">Dataset</a></span>
+      </li>
+      <li>
+        <span class="claim">Nearly the entire Eastern Shore is federally designated as a medically underserved area and a health professional shortage area. The five Maryland counties with the fewest primary care physicians per capita are all on the Shore. Caroline County has one health provider per 2,500 residents against Baltimore County's one per 1,000. More than a million Marylanders live in underserved areas, the largest share of them in rural Eastern Shore counties.</span>
+        <span class="cite">University of Maryland, Baltimore, "Filling the Physician Shortage on Maryland's Eastern Shore", 9 October 2024, reporting figures from the UM School of Medicine's rural health initiative. <a href="https://www.umaryland.edu/news/archived-news/october-2024/filling-the-physician-shortage-on-md-eastern-shore.php">Article</a></span>
+      </li>
+      <li>
+        <span class="claim">More than 795,000 strokes in the United States each year; about 610,000 are a first stroke and about 185,000 — nearly one in four — happen to someone who has had one before. Stroke is a leading cause of serious long-term disability and reduces mobility in more than half of survivors aged 65 and over. Stroke-related costs were nearly $56.2 billion across 2019–2020, including health care, medicines and missed work.</span>
+        <span class="cite">CDC, <em>Stroke Facts</em>, page dated 24 October 2024, citing the American Heart Association's 2023 and 2024 statistical updates. <a href="https://www.cdc.gov/stroke/data-research/facts-stats/">Page</a></span>
+      </li>
+      <li>
+        <span class="claim">US adult stroke prevalence has a state median of 3.4%, ranging from 1.8% in Puerto Rico to 4.8% in Arkansas.</span>
+        <span class="cite">American Heart Association, <em>2025 Heart Disease and Stroke Statistics: A Report of US and Global Data</em>, <em>Circulation</em>, 27 January 2025. Figures derived from 2022 BRFSS data. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12256702/">Full text</a></span>
+      </li>
+      <li>
+        <span class="claim">Mirror therapy improved upper-limb motor function at the end of treatment, standardised mean difference 0.47 (95% CI 0.27 to 0.67) across 36 trials and 1,173 participants, graded moderate-quality evidence. Effect on motor impairment: SMD 0.49 (95% CI 0.32 to 0.66) across 39 trials.</span>
+        <span class="cite">Thieme H, Morkisch N, Mehrholz J, et al. "Mirror therapy for improving motor function after stroke." <em>Cochrane Database of Systematic Reviews</em>, 2018. <a href="https://pubmed.ncbi.nlm.nih.gov/29993119/">Record</a></span>
+      </li>
+      <li>
+        <span class="claim">The benefit was not shown to persist. Only two trials with 88 participants measured motor function six months after treatment, and the pooled estimate — SMD 1.20, 95% CI −0.78 to 3.18 — is too imprecise to support any conclusion. The review's authors note that small sample sizes and incomplete reporting of methods limit confidence in the result.</span>
+        <span class="cite">Same review. This is quoted because it is the most important limitation of the evidence base this project rests on, and leaving it out would misrepresent the science.</span>
+      </li>
+    </ul>
+
+    <h2>What this project does not claim</h2>
+    <p>ReMoRehab has not been tested in a trial. No outcome on this site is a result we produced. The
+    claim being made is narrower than "this works": it is that mirror therapy has moderate-quality
+    evidence behind it, that doing more of it is limited mainly by access rather than by complexity,
+    and that access is measurably worse on Maryland's Lower Eastern Shore than almost anywhere else
+    in the state. Whether a printed headset and a browser app meaningfully change outcomes is an open
+    question that would need a study to answer.</p>
+
+    <h2>Reproducing the county figures</h2>
+    <p>The PLACES query used for the table on the home page is a single public API call, with no key
+    required:</p>
+    <p style="font-family:var(--mono,monospace);font-size:.9rem;background:var(--panel);border:1px solid var(--line);border-radius:.5rem;padding:1rem;max-width:none;overflow-x:auto">
+      https://data.cdc.gov/resource/swc5-untb.json?stateabbr=MD&amp;datavaluetypeid=AgeAdjPrv&amp;$limit=5000
+    </p>
+    <p>Filter the result to <code>measureid</code> values <code>STROKE</code>, <code>DISABILITY</code>,
+    <code>MOBILITY</code> and <code>ACCESS2</code>, and group by <code>locationname</code>.</p>
+  </div>
+</section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <p>ReMoRehab — Congressional App Challenge, Maryland's 1st congressional district.
+    <a href="https://github.com/aranyoray/remorehab">Repository</a></p>
+  </div>
+</footer>
+</body>
+</html>

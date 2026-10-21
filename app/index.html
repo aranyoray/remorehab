@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ReMoRehab — Session</title>
+<meta name="description" content="Guided mirror therapy in the browser. Your camera mirrors your working limb; the app paces the reps and keeps the log. Nothing is uploaded.">
+<meta name="theme-color" content="#0a1619">
+<link rel="stylesheet" href="../assets/styles.css">
+<style>
+  body { background: #071215; color: #e8f1f2; }
+  .app-head { position: sticky; top: 0; z-index: 30; background: rgba(7,18,21,.92); backdrop-filter: blur(8px); border-bottom: 1px solid #1d3a42; }
+  .app-head .wrap { display: flex; align-items: center; gap: 1rem; height: 3.5rem; }
+  .app-head a { color: #a9c2c7; text-decoration: none; font-size: .95rem; }
+  .app-head .brand { color: #e8f1f2; }
+  .app-wrap { max-width: 56rem; margin: 0 auto; padding: 1.25rem 1rem 4rem; }
+
+  .stage { position: relative; background: #000; border-radius: .8rem; overflow: hidden; aspect-ratio: 4/3; border: 1px solid #1d3a42; }
+  .stage canvas { width: 100%; height: 100%; display: block; }
+  .stage.stereo { aspect-ratio: 16/9; }
+  .stage-msg { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; padding: 2rem; gap: .75rem; color: #a9c2c7; }
+  .stage-msg p { max-width: 28rem; margin: 0 auto; }
+
+  .hud { position: absolute; left: 0; right: 0; bottom: 0; padding: .9rem 1rem; background: linear-gradient(transparent, rgba(0,0,0,.78)); pointer-events: none; }
+  .hud .ex { font-family: var(--display); font-weight: 700; font-size: 1.25rem; }
+  .hud .cue { color: #cfe6e8; font-size: .97rem; }
+  .hud .count { position: absolute; right: 1rem; bottom: .8rem; font-family: var(--display); font-weight: 700; font-size: 2.1rem; line-height: 1; }
+  .stage.stereo .hud { display: none; }
+
+  .bar { height: 5px; background: #16323a; border-radius: 99px; overflow: hidden; margin: .85rem 0 0; }
+  .bar i { display: block; height: 100%; background: #2fc2b1; width: 0; transition: width .18s linear; }
+
+  .controls { display: flex; flex-wrap: wrap; gap: .6rem; margin: 1.1rem 0 0; }
+  .controls button { font: inherit; font-weight: 600; padding: .7rem 1.15rem; border-radius: .55rem; border: 1.5px solid #2a4c55; background: #11262c; color: #e8f1f2; cursor: pointer; }
+  .controls button:hover { border-color: #2fc2b1; }
+  .controls button.primary { background: #2fc2b1; border-color: #2fc2b1; color: #06201d; }
+  .controls button.primary:hover { background: #4fd8c7; border-color: #4fd8c7; }
+  .controls button[disabled] { opacity: .45; cursor: not-allowed; }
+
+  fieldset { border: 1px solid #1d3a42; border-radius: .7rem; padding: 1rem 1.1rem; margin: 1.5rem 0 0; }
+  legend { font-family: var(--display); font-weight: 600; font-size: .95rem; padding: 0 .4rem; }
+  .row { display: flex; flex-wrap: wrap; gap: .5rem .9rem; align-items: center; }
+  .row + .row { margin-top: .85rem; }
+  .row > span.lbl { min-width: 9.5rem; color: #a9c2c7; font-size: .95rem; }
+  .seg { display: inline-flex; border: 1.5px solid #2a4c55; border-radius: .5rem; overflow: hidden; }
+  .seg button { font: inherit; font-weight: 600; font-size: .93rem; padding: .45rem .95rem; background: transparent; color: #cfe6e8; border: 0; cursor: pointer; }
+  .seg button[aria-pressed="true"] { background: #2fc2b1; color: #06201d; }
+  input[type=range] { accent-color: #2fc2b1; flex: 1; min-width: 9rem; }
+  .val { font-variant-numeric: tabular-nums; color: #cfe6e8; min-width: 3.4rem; font-size: .95rem; }
+
+  .log { margin: 1.5rem 0 0; }
+  .log table { min-width: 0; }
+  .log th, .log td { border-color: #1d3a42; }
+  .streak { font-family: var(--display); font-weight: 700; font-size: 1.6rem; }
+  .muted { color: #7e9aa1; font-size: .95rem; max-width: 40rem; }
+  .err { color: #ff9b86; }
+</style>
+</head>
+<body>
+
+<header class="app-head">
+  <div class="wrap">
+    <a class="brand" href="../">ReMoRehab</a>
+    <a href="../build/" style="margin-left:auto">Headset</a>
+    <a href="../data/">Sources</a>
+  </div>
+</header>
+
+<div class="app-wrap">
+
+  <div class="stage" id="stage">
+    <canvas id="canvas" width="960" height="720" aria-label="Mirrored view of your working limb"></canvas>
+    <div class="stage-msg" id="msg">
+      <p><strong>Mirror therapy, guided.</strong></p>
+      <p>Turn on the camera and the app will reflect your working limb across the centre line, so you
+      see two limbs moving together. Nothing is recorded and nothing leaves this device.</p>
+      <p class="muted">No camera? Start the session anyway — you will still get the paced cues and
+      the log.</p>
+    </div>
+    <div class="hud" id="hud" hidden>
+      <div class="ex" id="hud-ex">—</div>
+      <div class="cue" id="hud-cue"></div>
+      <div class="count" id="hud-count">0</div>
+    </div>
+  </div>
+  <div class="bar"><i id="bar"></i></div>
+
+  <div class="controls">
+    <button id="btn-start" class="primary">Start session</button>
+    <button id="btn-pause" disabled>Pause</button>
+    <button id="btn-skip" disabled>Next exercise</button>
+    <button id="btn-cam">Turn on camera</button>
+    <button id="btn-stereo" disabled>Headset view</button>
+  </div>
+  <p class="muted" id="status" role="status" aria-live="polite" style="margin-top:.8rem"></p>
+
+  <fieldset>
+    <legend>Setup</legend>
+    <div class="row">
+      <span class="lbl">Affected side</span>
+      <div class="seg" role="group" aria-label="Affected side">
+        <button id="side-left" aria-pressed="true">Left</button>
+        <button id="side-right" aria-pressed="false">Right</button>
+      </div>
+      <span class="muted">The app mirrors your <em>other</em> limb into this one's place.</span>
+    </div>
+    <div class="row">
+      <span class="lbl">Camera view</span>
+      <div class="seg" role="group" aria-label="Camera view">
+        <button id="flip-off" aria-pressed="true">As seen</button>
+        <button id="flip-on" aria-pressed="false">Flipped</button>
+      </div>
+      <span class="muted">Switch if your limb appears on the wrong side.</span>
+    </div>
+    <div class="row">
+      <span class="lbl"><label for="reps">Reps per exercise</label></span>
+      <input type="range" id="reps" min="6" max="24" step="2" value="12">
+      <span class="val" id="reps-val">12</span>
+    </div>
+    <div class="row">
+      <span class="lbl"><label for="pace">Seconds per rep</label></span>
+      <input type="range" id="pace" min="2" max="8" step="1" value="4">
+      <span class="val" id="pace-val">4 s</span>
+    </div>
+    <div class="row">
+      <span class="lbl"><label for="ipd">Headset spacing</label></span>
+      <input type="range" id="ipd" min="56" max="68" step="1" value="62">
+      <span class="val" id="ipd-val">62 mm</span>
+    </div>
+    <div class="row">
+      <span class="lbl">Rep sound</span>
+      <div class="seg" role="group" aria-label="Rep sound">
+        <button id="snd-on" aria-pressed="true">On</button>
+        <button id="snd-off" aria-pressed="false">Off</button>
+      </div>
+      <span class="muted">A tone each rep, so you can keep your eyes on the limb.</span>
+    </div>
+  </fieldset>
+
+  <div class="log">
+    <h2 style="font-size:1.15rem;margin-bottom:.4rem">Your sessions</h2>
+    <p class="muted" id="streak-line"><span class="streak" id="streak">0</span> day streak — stored on this device only.</p>
+    <div class="tbl-scroll">
+      <table>
+        <thead><tr><th scope="col">Date</th><th scope="col">Exercises</th><th scope="col">Reps</th><th scope="col">Minutes</th></tr></thead>
+        <tbody id="log-body"><tr><td colspan="4" class="muted">No sessions yet.</td></tr></tbody>
+      </table>
+    </div>
+    <div class="controls"><button id="btn-clear">Clear history</button></div>
+  </div>
+
+  <p class="muted" style="margin-top:2rem">ReMoRehab is a student project, not a medical device. It
+  has not been clinically trialled and is not a substitute for a therapist. Set your programme with a
+  clinician. If you feel pain, dizziness or new weakness, stop and get medical advice.</p>
+
+</div>
+
+<script src="../assets/app.js"></script>
+</body>
+</html>
