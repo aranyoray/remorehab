@@ -5,7 +5,7 @@ turns a phone you already own into the display.
 
 **Congressional App Challenge entry, Maryland's 1st congressional district.**
 
-Site: https://aranyoray.github.io/remorehab/ · [Open the app](https://aranyoray.github.io/remorehab/app/)
+Site: https://www.aranyoing.com/remorehab/ · [Open the app](https://www.aranyoing.com/remorehab/app/)
 
 ---
 
@@ -25,7 +25,7 @@ up. The barrier is rarely that the exercise is hard. It is getting to a room wit
 three times a week for three months.
 
 Every figure is sourced, with data years and limitations, on the
-[numbers page](https://aranyoray.github.io/remorehab/data/).
+[numbers page](https://www.aranyoing.com/remorehab/data/).
 
 ## What this is
 

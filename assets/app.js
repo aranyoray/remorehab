@@ -3,6 +3,13 @@
 (function () {
   'use strict';
 
+  // Browsers only expose the camera on a secure origin. If this page was opened
+  // over plain http, move to https before anything else runs.
+  if (location.protocol === 'http:' && !/^(localhost|127\.|\[::1\])/.test(location.hostname)) {
+    location.replace(location.href.replace(/^http:/, 'https:'));
+    return;
+  }
+
   var EXERCISES = [
     { name: 'Open and close the hand', cue: 'Spread the fingers wide, then make a loose fist.' },
     { name: 'Wrist up and down', cue: 'Bend the wrist back, then let it drop. Keep the forearm still.' },
@@ -74,8 +81,15 @@
       $('btn-stereo').disabled = false;
       say('Camera on. Nothing is recorded or uploaded.');
     }).catch(function (err) {
-      say('Camera unavailable (' + (err && err.name ? err.name : 'error') +
-          '). The paced session still works without it.', true);
+      var why = (err && err.name) || 'error';
+      if (!window.isSecureContext) {
+        why = 'this page is not on a secure connection';
+      } else if (why === 'NotAllowedError') {
+        why = 'permission was declined — you can re-allow it in the address bar';
+      } else if (why === 'NotFoundError') {
+        why = 'no camera found on this device';
+      }
+      say('Camera unavailable: ' + why + '. The paced session still works without it.', true);
     });
   }
 
